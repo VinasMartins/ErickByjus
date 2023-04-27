@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>
+            Jogo de Perguntas do Erick
+        </h1>
+        <h2>
+            10 perguntas muito divertidas
+        </h2>
+        <h3>
+            Regras do jogo:
+        </h3>
+        <p>
+            1. Sera um jogo de 10 perguntas alternativas com opcoes de A ate E;<br>
+            2. Voce deve escolher apenas uma opcao para cada pergunta;<br>
+            3. Voce deve preencher com a letra da opcao escolhida.
+        </p>
+        <button onclick="JogoDePerguntas()">
+            Começar o jogo
+        </button>
+        <script>
+            function JogoDePerguntas(){
+                let acertos = 0;
+                let erros = 0;
+                let sufixo = "'. Clique em ok para ir para a proxima pergunta"
+                
+                // definindo a pergunta 1 e recebendo a resposta via prompt
+                let pergunta1 = prompt(
+                    "1. Se uma pessoa comprar 10 laranjas e 5 macas e depois comer 2 macas, quantas laranjas restam?\n\n"+
+                    "   (A) - 3 laranjas\n"+
+                    "   (B) - 5 laranjas\n"+
+                    "   (C) - 10 laranjas\n"+
+                    "   (D) - 13 laranjas\n"+
+                    "   (E) - Nenhuma das anteriores"
+                ).toUpperCase();
+                // verificando resposta correta da pergunta 1
+                switch(pergunta1){
+                    case "C":
+                        acertos++;
+                        alert("Sua resposta esta certa, voce respondeu a letra '"+pergunta1+sufixo);
+                        break;
+                    default:
+                        erros++;
+                        alert("Sua resposta esta errada, voce respondeu a letra '"+pergunta1+sufixo)
+                }
+                // fim da pergunta 1
+
+                // definindo a pergunta 2 e recebendo a resposta via prompt
+                let pergunta2 = prompt(
+                    "2. Na epoca do diluvio alguns animais da terra foram colocados na arca. Quantos animais de cada especie Moises colocou na arca?\n\n"+
+                    "   (A) - 3 animais\n"+
+                    "   (B) - 2 animais\n"+
+                    "   (C) - 4 animais\n"+
+                    "   (D) - Uma duzia de animais\n"+
+                    "   (E) - Nenhum animal"
+                ).toUpperCase();
+                // verificando resposta correta da pergunta 2
+                switch(pergunta2){
+                    case "E":
+                        acertos++;
+                        alert("Sua resposta esta certa, voce respondeu a letra '"+pergunta2+sufixo);
+                        break;
+                    default:
+                        erros++;
+                        alert("Sua resposta esta errada, voce respondeu a letra '"+pergunta2+sufixo)
+                }
+                // fim da pergunta 2
+
+                // definindo a pergunta 3 e recebendo a resposta via prompt
+                let pergunta3 = prompt(
+                    "3. O que um bom marinheiro faz quando o barco afunda?\n\n"+
+                    "   (A) - Pede resgate\n"+
+                    "   (B) - Acende um iluminador de emergencia\n"+
+                    "   (C) - Olha para os lados procurando navios proximos\n"+
+                    "   (D) - Nada\n"+
+                    "   (E) - Nenhuma das anteriores"
+                ).toUpperCase();
+                // verificando resposta correta da pergunta 3
+                switch(pergunta3){
+                    case "D":
+                        acertos++;
+                        alert("Sua resposta esta certa, voce respondeu a letra '"+pergunta3+sufixo);
+                        break;
+                    default:
+                        erros++;
+                        alert("Sua resposta esta errada, voce respondeu a letra '"+pergunta3+sufixo)
+                }
+                // fim da pergunta 3
+
+                // definindo a pergunta 4 e recebendo a resposta via prompt
+                let pergunta4 = prompt(
+                    "4. De quem é a famosa frase “Penso, logo existo”?\n\n"+
+                    "   (A) - Descartes\n"+
+                    "   (B) - Galileu Galilei\n"+
+                    "   (C) - Platao\n"+
+                    "   (D) - Socrates\n"+
+                    "   (E) - Nenhuma das anteriores"
+                ).toUpperCase();
+                // verificando resposta correta da pergunta 4
+                switch(pergunta4){
+                    case "A":
+                        acertos++;
+                        alert("Sua resposta esta certa, voce respondeu a letra '"+pergunta4+sufixo);
+                        break;
+                    default:
+                        erros++;
+                        alert("Sua resposta esta errada, voce respondeu a letra '"+pergunta4+sufixo)
+                }
+                // fim da pergunta 4
+
+                // definindo a pergunta 5 e recebendo a resposta via prompt
+                let pergunta5 = prompt(
+                    "5. De qual pais e a invencao do chuveiro eletrico?\n\n"+
+                    "   (A) - Estados Unidos\n"+
+                    "   (B) - Brasil\n"+
+                    "   (C) - Inglaterra\n"+
+                    "   (D) - Franca\n"+
+                    "   (E) - Nenhuma das anteriores"
+                ).toUpperCase();
+                // verificando resposta correta da pergunta 5
+                switch(pergunta5){
+                    case "B":
+                        acertos++;
+                        alert("Sua resposta esta certa, voce respondeu a letra '"+pergunta5+sufixo);
+                        break;
+                    default:
+                        erros++;
+                        alert("Sua resposta esta errada, voce respondeu a letra '"+pergunta5+sufixo)
+                }
+                // fim da pergunta 5
+
+                 // definindo a pergunta 6 e recebendo a resposta via prompt
+                 let pergunta6 = prompt(
+                    "6. Qual e o maior pais do mundo?\n\n"+
+                    "   (A) - Estados Unidos\n"+
+                    "   (B) - Brasil\n"+
+                    "   (C) - Inglaterra\n"+
+                    "   (D) - Russia\n"+
+                    "   (E) - Canada"
+                ).toUpperCase();
+                // verificando resposta correta da pergunta 6
+                switch(pergunta6){
+                    case "D":
+                        acertos++;
+                        alert("Sua resposta esta certa, voce respondeu a letra '"+pergunta6+sufixo);
+                        break;
+                    default:
+                        erros++;
+                        alert("Sua resposta esta errada, voce respondeu a letra '"+pergunta6+sufixo)
+                }
+                // fim da pergunta 6
+
+                 // definindo a pergunta 7 e recebendo a resposta via prompt
+                 let pergunta7 = prompt(
+                    "7. Qual e o menor pais do mundo?\n\n"+
+                    "   (A) - Belgica\n"+
+                    "   (B) - Alemanha\n"+
+                    "   (C) - Irlanda\n"+
+                    "   (D) - Italia\n"+
+                    "   (E) - Nenhuma das alternativas"
+                ).toUpperCase();
+                // verificando resposta correta da pergunta 7
+                switch(pergunta7){
+                    case "E":
+                        acertos++;
+                        alert("Sua resposta esta certa, voce respondeu a letra '"+pergunta7+sufixo);
+                        break;
+                    default:
+                        erros++;
+                        alert("Sua resposta esta errada, voce respondeu a letra '"+pergunta7+sufixo)
+                }
+                // fim da pergunta 7
+
+                 // definindo a pergunta 8 e recebendo a resposta via prompt
+                 let pergunta8 = prompt(
+                    "8. Qual o número mínimo de jogadores numa partida de futebol?\n\n"+
+                    "   (A) - 7\n"+
+                    "   (B) - 9\n"+
+                    "   (C) - 11\n"+
+                    "   (D) - 10\n"+
+                    "   (E) - Nenhuma das alternativas"
+                ).toUpperCase();
+                // verificando resposta correta da pergunta 8
+                switch(pergunta8){
+                    case "A":
+                        acertos++;
+                        alert("Sua resposta esta certa, voce respondeu a letra '"+pergunta8+sufixo);
+                        break;
+                    default:
+                        erros++;
+                        alert("Sua resposta esta errada, voce respondeu a letra '"+pergunta8+sufixo)
+                }
+                // fim da pergunta 8
+
+                // definindo a pergunta 9 e recebendo a resposta via prompt
+                let pergunta9 = prompt(
+                    "9. Quanto tempo a luz do Sol demora para chegar à Terra?\n\n"+
+                    "   (A) - 5 minutos\n"+
+                    "   (B) - 11 minutos\n"+
+                    "   (C) - 8 minutos\n"+
+                    "   (D) - 1 dia\n"+
+                    "   (E) - Nenhuma das alternativas"
+                ).toUpperCase();
+                // verificando resposta correta da pergunta 9
+                switch(pergunta9){
+                    case "C":
+                        acertos++;
+                        alert("Sua resposta esta certa, voce respondeu a letra '"+pergunta9+sufixo);
+                        break;
+                    default:
+                        erros++;
+                        alert("Sua resposta esta errada, voce respondeu a letra '"+pergunta9+sufixo)
+                }
+                // fim da pergunta 9
+
+                // definindo a pergunta 10 e recebendo a resposta via prompt
+                let pergunta10 = prompt(
+                    "10. Qual personagem do folclore brasileiro gosta de ser agradado com fumo pelos cacadores da floresta?\n\n"+
+                    "   (A) - Saci\n"+
+                    "   (B) - Caipora\n"+
+                    "   (C) - Boitata\n"+
+                    "   (D) - Lobisomem\n"+
+                    "   (E) - Nenhuma das alternativas"
+                ).toUpperCase();
+                // verificando resposta correta da pergunta 10
+                switch(pergunta10){
+                    case "B":
+                        acertos++;
+                        alert("Sua resposta esta certa, voce respondeu a letra '"+pergunta10+sufixo);
+                        break;
+                    default:
+                        erros++;
+                        alert("Sua resposta esta errada, voce respondeu a letra '"+pergunta10+"'. Questionario finalizado!\nAperte Ok para ver sua pontuacao.");
+                }
+                // fim da pergunta 10
+
+                // alert final com a pontuacao geral
+                alert(
+                    "Voce acertou "+acertos+" perguntas\n"+
+                    "Voce errou "+erros+" perguntas"
+                )
+            }
+        </script>
+    </body>
+</html>
