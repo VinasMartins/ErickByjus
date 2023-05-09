@@ -62,6 +62,7 @@ function draw(){
 
 }
 
+//criando nuvens
 function createCloud(){
 
   if(frameCount %60 === 0){
@@ -70,7 +71,6 @@ function createCloud(){
     cloud.addImage(cloudImg);
     cloud.scale = random(0.4,1.4);
     cloud.depth = Trex.depth -1;
-
   }
   
 }
