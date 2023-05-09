@@ -23,19 +23,24 @@ rabbit.scale =0.09;
 rabbit.addImage(rabbitImg);
 }
 
-
+//desenha sprites
 function draw() {
   background(0);
 
-
+  //criando paredes e definindo o coelho para colidir com as paredes.
   edges= createEdgeSprites();
   rabbit.collide(edges);
 
+  //a variavel armazena o arredondamento do numero aleatorio de 1 até 3.
   var sorting = Math.round(random(1,3));
-
+  
+  //movendo o coelho no eixo x do mouse.
   rabbit.x = World.mouseX;
   
-
+  //valida se o modulo 80 do frameCount retorna 0. 
+  //E se for verifica se sorting é = 1 e entao chama a func createApples.
+  //se nao verifica se sorting é = 2 e entao chama a funcao createOrange.
+  //caso contrario chama a func createRed.
   if(frameCount %80 === 0){
     if(sorting === 1){
       createApples();
@@ -52,7 +57,7 @@ function draw() {
   drawSprites();
   
 }
-
+//criando maçãs com o tamanho,a imagem,avelocidade.
 function createApples(){
   apple = createSprite(random(50,350),40,40,10,10);
   apple.addImage(appleImg);
@@ -62,6 +67,7 @@ function createApples(){
   
 }
 
+//criando criando folha laranja com o tamanho,a imagem,avelocidade.
 function createOrange(){
   orangeL = createSprite(random(50,350),40,40,10,10);
   orangeL.addImage(orangeImg);
@@ -71,7 +77,7 @@ function createOrange(){
   
 }
 
-
+////criando criando folha vermelha com o tamanho,a imagem,avelocidade.
 function createRed(){
   red = createSprite(random(50,350),40,40,10,10);
   red.addImage(redImg);
