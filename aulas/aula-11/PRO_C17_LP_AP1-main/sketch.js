@@ -8,6 +8,8 @@ var invisibleground;
 
 var cloud,cloudImg;
 
+var obstacle,obstacleImg1,obstacleImg2,obstacleImg3,obstacleImg4,obstacleImg5,obstacleImg6;
+
 //preload carrega as midías do jogo 
 function preload(){
   TrexRunning = loadAnimation("trex1.png","trex3.png","trex4.png");
@@ -15,6 +17,14 @@ function preload(){
   groundImg = loadImage("ground2.png");
 
   cloudImg = loadImage("cloud.png");
+
+  obstacleImg1 = loadImage("obstacle1.png");
+  obstacleImg2 = loadImage("obstacle2.png");
+  obstacleImg3 = loadImage("obstacle3.png");
+  obstacleImg4 = loadImage("obstacle4.png");
+  obstacleImg5 = loadImage("obstacle5.png");
+  obstacleImg6 = loadImage("obstacle6.png");
+  
 }
 //setup faz a aconfiguração
 function setup(){
@@ -55,6 +65,8 @@ function draw(){
 
     createCloud();
 
+    createObstacle();
+
     
    //coordenadas do mouse na tela
   text("X: "+mouseX+"/ Y: "+mouseY,mouseX,mouseY);
@@ -71,6 +83,49 @@ function createCloud(){
     cloud.addImage(cloudImg);
     cloud.scale = random(0.4,1.4);
     cloud.depth = Trex.depth -1;
+    cloud.lifetime = 230;
+
   }
   
+}
+
+function createObstacle(){
+
+  if(frameCount %60 === 0){
+    obstacle = createSprite(600,170,40,10);
+    obstacle.velocityX = -3;
+    obstacle.lifetime = 230;
+    obstacle.scale = 0.5;
+    
+    var sorting = Math.round(random(1,6));
+
+    switch (sorting) {
+      case 1: obstacle.addImage(obstacleImg1);
+        
+        break;
+
+      case 2: obstacle.addImage(obstacleImg2);
+
+        break;
+
+      case 3: obstacle.addImage(obstacleImg3);
+
+        break;
+
+      case 4: obstacle.addImage(obstacleImg4);
+
+        break;
+
+      case 5: obstacle.addImage(obstacleImg5);
+
+        break;
+
+      case 6: obstacle.addImage(obstacleImg6);
+
+        break;    
+        
+        
+    }
+  }
+
 }
