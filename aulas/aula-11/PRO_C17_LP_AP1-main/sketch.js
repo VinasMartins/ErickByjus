@@ -1,4 +1,4 @@
-var Trex,TrexRunning;
+var Trex, TrexRunning;
 
 var ground;
 
@@ -6,14 +6,26 @@ var groundImg;
 
 var invisibleground;
 
-var cloud,cloudImg;
+var cloud, cloudImg;
 
-var obstacle,obstacleImg1,obstacleImg2,obstacleImg3,obstacleImg4,obstacleImg5,obstacleImg6;
+var obstacle, obstacleImg1, obstacleImg2, obstacleImg3, obstacleImg4, obstacleImg5, obstacleImg6;
+
+var record = 0;
+
+var score = 0;
+
+var play = 1;
+
+var end = 0;
+
+var gameState = play;
+
+var obstaclegp,cloudgp;
 
 //preload carrega as midías do jogo 
-function preload(){
-  TrexRunning = loadAnimation("trex1.png","trex3.png","trex4.png");
-   
+function preload() {
+  TrexRunning = loadAnimation("trex1.png", "trex3.png", "trex4.png");
+
   groundImg = loadImage("ground2.png");
 
   cloudImg = loadImage("cloud.png");
@@ -24,84 +36,114 @@ function preload(){
   obstacleImg4 = loadImage("obstacle4.png");
   obstacleImg5 = loadImage("obstacle5.png");
   obstacleImg6 = loadImage("obstacle6.png");
-  
+
 }
 //setup faz a aconfiguração
-function setup(){
+function setup() {
 
-  createCanvas(600,200);
-  
-  Trex = createSprite(50,160,20,50);
-  Trex.addAnimation("Runner",TrexRunning);
+  createCanvas(600, 200);
+
+  Trex = createSprite(50, 160, 20, 50);
+  Trex.addAnimation("Runner", TrexRunning);
   Trex.scale = 0.5;
 
-  ground = createSprite(300,170,600,2);
-  ground.addImage("ground",groundImg);
+  ground = createSprite(300, 170, 600, 2);
+  ground.addImage("ground", groundImg);
 
-  invisibleground = createSprite(300,190,600,2);
+  invisibleground = createSprite(300, 190, 600, 2);
   invisibleground.visible = false;
 
- 
+  obstaclegp = new Group(); 
+
+  cloudgp = new Group();
+
+
+
+
 }
 //draw faz o movimento, a ação do jogo
-function draw(){
+function draw() {
   background("#f0f9f7");
 
+  textSize(18);
+  fill("black");
+  text("Score: " + score, 450, 80);
+  text("Record: " + record, 450, 100);
 
-  ground.velocityX = -10;
 
-  if(ground.x < 0){
-    ground.x = ground.width/2;
-  }
 
-  if(keyDown("space") && Trex.y > 164){
-    Trex.velocityY = -11;
+  if (gameState === play) {
+    score += Math.round(frameCount / 60);
+    ground.velocityX = -10;
 
-  }
+    if (ground.x < 0) {
+      ground.x = ground.width / 2;
+    }
 
-    Trex.velocityY = Trex.velocityY +0.5;
-  
-    Trex.collide(invisibleground);
+    if (keyDown("space") && Trex.y > 164) {
+      Trex.velocityY = -11;
+
+    }
 
     createCloud();
 
     createObstacle();
 
-    
-   //coordenadas do mouse na tela
-  text("X: "+mouseX+"/ Y: "+mouseY,mouseX,mouseY);
+
+  }
+
+  if(Trex.isTouching(obstaclegp)){
+    gameState = end;
+  }
+
+  if (gameState === end) {
+
+  }
+
+
+
+  Trex.velocityY = Trex.velocityY + 0.5;
+
+  Trex.collide(invisibleground);
+
+
+  //coordenadas do mouse na tela
+  text("X: " + mouseX + "/ Y: " + mouseY, mouseX, mouseY);
   drawSprites();
 
 }
 
 //criando nuvens
-function createCloud(){
+function createCloud() {
 
-  if(frameCount %60 === 0){
-    cloud = createSprite(600,random(10,100),40,10);
+  if (frameCount % 60 === 0) {
+    cloud = createSprite(600, random(10, 100), 40, 10);
     cloud.velocityX = -3;
     cloud.addImage(cloudImg);
-    cloud.scale = random(0.4,1.4);
-    cloud.depth = Trex.depth -1;
+    cloud.scale = random(0.4, 1.4);
+    cloud.depth = Trex.depth - 1;
     cloud.lifetime = 230;
+    cloudgp.add(cloud);
+
 
   }
-  
+
 }
 
-function createObstacle(){
+function createObstacle() {
 
-  if(frameCount %60 === 0){
-    obstacle = createSprite(600,170,40,10);
+  if (frameCount % 60 === 0) {
+    obstacle = createSprite(600, 170, 40, 10);
     obstacle.velocityX = -3;
     obstacle.lifetime = 230;
+    obstaclegp.add(obstacle);
     obstacle.scale = 0.5;
-    
-    var sorting = Math.round(random(1,6));
+
+    var sorting = Math.round(random(1, 6));
 
     switch (sorting) {
       case 1: obstacle.addImage(obstacleImg1);
-        
+
         break;
 
       case 2: obstacle.addImage(obstacleImg2);
@@ -122,9 +164,9 @@ function createObstacle(){
 
       case 6: obstacle.addImage(obstacleImg6);
 
-        break;    
-        
-        
+        break;
+
+
     }
   }
 
