@@ -8,7 +8,7 @@ var end = 0;
 
 var gameState = play;
 
-var bow , arrow, background, redB, blueB, pinkB, greenB,arrowGroup;
+var bow , arrow, background, balloonB,arrowGroup;
 var bowImage, arrowImage, green_balloonImage, red_balloonImage, pink_balloonImage ,blue_balloonImage, backgroundImage;
 
 var score = 0;
@@ -40,10 +40,7 @@ function setup() {
   bow.scale = 1;
   
   score = 0;
-  redB = new Group();
-  blueB = new Group();
-  pinkB = new Group();
-  greenB = new Group();
+  balloonB = new Group();
  
   arrowGroup = new Group();
 
@@ -74,35 +71,23 @@ function draw() {
     
     if (World.frameCount % 100 == 0) {
       switch(select_balloon ){
-        case 1:redBalloon();
+        case 1:createBalloon(which_balloon=red_balloonImage, balloon_scale=0.1, balloon_velocityX=6);
         break;
-        case 2:blueBalloon();
+        case 2:createBalloon(which_balloon=blue_balloonImage, balloon_scale=0.1, balloon_velocityX=4);
         break;
-        case 3:pinkBalloon();
+        case 3:createBalloon(which_balloon=pink_balloonImage, balloon_scale=1, balloon_velocityX=3);
         break;
-        case 4:greenBalloon();
+        case 4:createBalloon(which_balloon=green_balloonImage, balloon_scale=0.1, balloon_velocityX=5);
         break;
         default:break;
       }
     }
 
-    if(arrowGroup.isTouching(redB)){
-      destroyBalloon(redB);
+    if(arrowGroup.isTouching(balloonB)){
+      destroyBalloon(balloonB);
     }
 
-    if(arrowGroup.isTouching(blueB)){
-      destroyBalloon(blueB);
-    }
-
-    if(arrowGroup.isTouching(pinkB)){
-      destroyBalloon(pinkB);
-    }
-
-    if(arrowGroup.isTouching(greenB)){
-      destroyBalloon(greenB);
-    }
-
-    if(redB.isTouching(bow)||blueB.isTouching(bow)||pinkB.isTouching(bow)||greenB.isTouching(bow)){
+    if(balloonB.isTouching(bow)){
       bow.destroy();
       gameState = end;
     }
@@ -111,10 +96,7 @@ function draw() {
   //escreva uma condição para o estado END
   if(gameState === end){
     arrowGroup.destroyEach();
-    redB.destroyEach();
-    blueB.destroyEach();
-    pinkB.destroyEach();
-    greenB.destroyEach();
+    balloonB.destroyEach();
     scene.velocityX = 0;
   }
  
@@ -126,49 +108,13 @@ function draw() {
 }
 
 
-// function createBalloon(which_balloon, balloon_scale, balloon_velocityX) {
-//   var balloon = createSprite(0,Math.round(random(20, 370)), 10, 10);
-//   balloon.addImage(which_balloon);
-//   balloon.velocityX = balloon_velocityX;
-//   balloon.lifetime = 150;
-//   balloon.scale = balloon_scale;
-//   balloonB.add(balloon);
-// }
-
-function redBalloon() {
-  var red = createSprite(0,Math.round(random(20, 370)), 10, 10);
-  red.addImage(red_balloonImage);
-  red.velocityX = 3;
-  red.lifetime = 150;
-  red.scale = 0.1;
-  redB.add(red);
-}
-
-function blueBalloon() {
-  var blue = createSprite(0,Math.round(random(20, 370)), 10, 10);
-  blue.addImage(blue_balloonImage);
-  blue.velocityX = 3;
-  blue.lifetime = 150;
-  blue.scale = 0.1;
-  blueB.add(blue);
-}
-
-function greenBalloon() {
-  var green = createSprite(0,Math.round(random(20, 370)), 10, 10);
-  green.addImage(green_balloonImage);
-  green.velocityX = 3;
-  green.lifetime = 150;
-  green.scale = 0.1;
-  greenB.add(green);
-}
-
-function pinkBalloon() {
-  var pink = createSprite(0,Math.round(random(20, 370)), 10, 10);
-  pink.addImage(pink_balloonImage);
-  pink.velocityX = 3;
-  pink.lifetime = 150;
-  pink.scale = 1
-  pinkB.add(pink);
+function createBalloon(which_balloon, balloon_scale, balloon_velocityX) {
+  var balloon = createSprite(0,Math.round(random(20, 370)), 10, 10);
+  balloon.addImage(which_balloon);
+  balloon.velocityX = balloon_velocityX;
+  balloon.lifetime = 150;
+  balloon.scale = balloon_scale;
+  balloonB.add(balloon);
 }
 
 // Criar flechas para o arco
