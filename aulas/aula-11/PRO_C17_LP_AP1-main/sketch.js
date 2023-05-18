@@ -1,191 +1,193 @@
+var Trex, TrexRunning;
 
-//Declare a variável para PLAY e END
+var ground;
+
+var groundImg;
+
+var invisibleground;
+
+var cloud, cloudImg;
+
+var obstacle, obstacleImg1, obstacleImg2, obstacleImg3, obstacleImg4, obstacleImg5, obstacleImg6;
+
+var record = 0;
+
+var score = 0;
+
 var play = 1;
 
 var end = 0;
 
-//Atribua o valor de gameState como PLAY
-
 var gameState = play;
 
-var bow , arrow, background, redB, blueB, pinkB, greenB,arrowGroup;
-var bowImage, arrowImage, green_balloonImage, red_balloonImage, pink_balloonImage ,blue_balloonImage, backgroundImage;
+var obstaclegp,cloudgp;
 
-var score = 0;
-function preload(){
-  
-  backgroundImage = loadImage("background0.png");
-  
-  arrowImage = loadImage("arrow0.png");
-  bowImage = loadImage("bow0.png");
-  red_balloonImage = loadImage("red_balloon0.png");
-  green_balloonImage = loadImage("green_balloon0.png");
-  pink_balloonImage = loadImage("pink_balloon0.png");
-  blue_balloonImage = loadImage("blue_balloon0.png");
-  
+var Trexcollide;
+
+var gameOver,gameOverImg;
+
+var restart,restartImg;
+
+//preload carrega as midías do jogo 
+function preload() {
+  TrexRunning = loadAnimation("trex1.png", "trex3.png", "trex4.png");
+
+  groundImg = loadImage("ground2.png");
+
+  cloudImg = loadImage("cloud.png");
+
+  obstacleImg1 = loadImage("obstacle1.png");
+  obstacleImg2 = loadImage("obstacle2.png");
+  obstacleImg3 = loadImage("obstacle3.png");
+  obstacleImg4 = loadImage("obstacle4.png");
+  obstacleImg5 = loadImage("obstacle5.png");
+  obstacleImg6 = loadImage("obstacle6.png");
+
+  Trexcollide = loadAnimation("trex_collided.png");
+
+  gameOverImg = loadImage("gameOver.png");
+
+  restartImg = loadImage("restart.png");
+
 }
-
-
+//setup faz a aconfiguração
 function setup() {
-  createCanvas(400, 400);
-  
-  //crie o fundo
-  scene = createSprite(0,0,400,400);
-  scene.addImage(backgroundImage);
-  scene.scale = 2.5;
-  
-  // criando arco para a flecha
-  bow = createSprite(380,220,20,50);
-  bow.addImage(bowImage); 
-  bow.scale = 1;
-  
-  score = 0;
-  redB = new Group();
-  blueB = new Group();
-  pinkB = new Group();
-  greenB = new Group();
- 
-  arrowGroup = new Group();
 
-  
+  createCanvas(600, 200);
+
+  Trex = createSprite(50, 160, 20, 50);
+  Trex.addAnimation("Runner", TrexRunning);
+  Trex.addAnimation("Collide",Trexcollide);
+  Trex.scale = 0.5;
+
+  ground = createSprite(300, 170, 600, 2);
+  ground.addImage("ground", groundImg);
+
+  invisibleground = createSprite(300, 190, 600, 2);
+  invisibleground.visible = false;
+
+  obstaclegp = new Group(); 
+
+  cloudgp = new Group();
+
+  gameOver = createSprite(300,80);
+  gameOver.addImage(gameOverImg);
+  gameOver.scale = 0.5;
+
 }
-
+//draw faz o movimento, a ação do jogo
 function draw() {
-  background(0);
+  background("#f0f9f7");
 
-  //Adicione a condição para gameState = PLAY
-  if(gameState === play){
-
-    bow.y = World.mouseY;
-  // solo em movimento
-    scene.velocityX = -3;
-
-    if (scene.x < 0){
-      scene.x = scene.width/2;
-    }
-    
-    // soltar arco quando a tecla espaço for pressionada
-    if (keyDown("space")) {
-      createArrow();
-    }
-    
-    //criando inimigos continuamente
-    var select_balloon = Math.round(random(1,4));
-    
-    if (World.frameCount % 100 == 0) {
-      switch(select_balloon ){
-        case 1:redBalloon();
-        break;
-        case 2:blueBalloon();
-        break;
-        case 3:pinkBalloon();
-        break;
-        case 4:greenBalloon();
-        break;
-        default:break;
-      }
-    }
-
-    if(arrowGroup.isTouching(redB)){
-      destroyBalloon(redB);
-    }
-
-    if(arrowGroup.isTouching(blueB)){
-      destroyBalloon(blueB);
-    }
-
-    if(arrowGroup.isTouching(pinkB)){
-      destroyBalloon(pinkB);
-    }
-
-    if(arrowGroup.isTouching(greenB)){
-      destroyBalloon(greenB);
-    }
-
-    if(redB.isTouching(bow)||blueB.isTouching(bow)||pinkB.isTouching(bow)||greenB.isTouching(bow)){
-      bow.destroy();
-      gameState = end;
-    }
-  }
-
-  //escreva uma condição para o estado END
-  if(gameState === end){
-    arrowGroup.destroyEach();
-    redB.destroyEach();
-    blueB.destroyEach();
-    pinkB.destroyEach();
-    greenB.destroyEach();
-    scene.velocityX = 0;
-  }
- 
-  drawSprites();
   textSize(18);
   fill("black");
-  text("score: " + score, 200, 20);
+  text("Score: " + score, 450, 80);
+  text("Record: " + record, 450, 100);
+
+
+
+  if (gameState === play) {
+    score += Math.round(frameCount / 60);
+    ground.velocityX = -10;
+
+    if (ground.x < 0) {
+      ground.x = ground.width / 2;
+    }
+
+    if (keyDown("space") && Trex.y > 164) {
+      Trex.velocityY = -11;
+
+    }
+
+    createCloud();
+
+    createObstacle();
+
+
+  }
+
+  if(Trex.isTouching(obstaclegp)){
+    gameState = end;
+  }
+
+  if (gameState === end) {
+    Trex.changeAnimation("Collide",Trexcollide);
+    ground.velocityX = 0;
+    cloudgp.setVelocityXEach(0);
+    obstaclegp.setVelocityXEach(0);
+    cloudgp.setLifetimeEach(-1);
+    obstaclegp.setLifetimeEach(-1);
+  
+  }
+
+
+
+  Trex.velocityY = Trex.velocityY + 0.5;
+
+  Trex.collide(invisibleground);
+
+
+  //coordenadas do mouse na tela
+  text("X: " + mouseX + "/ Y: " + mouseY, mouseX, mouseY);
+  drawSprites();
 
 }
 
+//criando nuvens
+function createCloud() {
 
-// function createBalloon(which_balloon, balloon_scale, balloon_velocityX) {
-//   var balloon = createSprite(0,Math.round(random(20, 370)), 10, 10);
-//   balloon.addImage(which_balloon);
-//   balloon.velocityX = balloon_velocityX;
-//   balloon.lifetime = 150;
-//   balloon.scale = balloon_scale;
-//   balloonB.add(balloon);
-// }
+  if (frameCount % 60 === 0) {
+    cloud = createSprite(600, random(10, 100), 40, 10);
+    cloud.velocityX = -3;
+    cloud.addImage(cloudImg);
+    cloud.scale = random(0.4, 1.4);
+    cloud.depth = Trex.depth - 1;
+    cloud.lifetime = 230;
+    cloudgp.add(cloud);
 
-function redBalloon() {
-  var red = createSprite(0,Math.round(random(20, 370)), 10, 10);
-  red.addImage(red_balloonImage);
-  red.velocityX = 3;
-  red.lifetime = 150;
-  red.scale = 0.1;
-  redB.add(red);
-}
 
-function blueBalloon() {
-  var blue = createSprite(0,Math.round(random(20, 370)), 10, 10);
-  blue.addImage(blue_balloonImage);
-  blue.velocityX = 3;
-  blue.lifetime = 150;
-  blue.scale = 0.1;
-  blueB.add(blue);
-}
-
-function greenBalloon() {
-  var green = createSprite(0,Math.round(random(20, 370)), 10, 10);
-  green.addImage(green_balloonImage);
-  green.velocityX = 3;
-  green.lifetime = 150;
-  green.scale = 0.1;
-  greenB.add(green);
-}
-
-function pinkBalloon() {
-  var pink = createSprite(0,Math.round(random(20, 370)), 10, 10);
-  pink.addImage(pink_balloonImage);
-  pink.velocityX = 3;
-  pink.lifetime = 150;
-  pink.scale = 1
-  pinkB.add(pink);
-}
-
-// Criar flechas para o arco
- function createArrow() {
-  var arrow= createSprite(100, 100, 60, 10);
-  arrow.addImage(arrowImage);
-  arrow.x = 360;
-  arrow.y=bow.y;
-  arrow.velocityX = -4;
-  arrow.lifetime = 100;
-  arrow.scale = 0.3;
-  arrowGroup.add(arrow);
+  }
 
 }
 
-function destroyBalloon(which_balloon){
-  which_balloon.destroyEach();
-  arrowGroup.destroyEach();
-  score += 1;
+function createObstacle() {
+
+  if (frameCount % 60 === 0) {
+    obstacle = createSprite(600, 170, 40, 10);
+    obstacle.velocityX = -3;
+    obstacle.lifetime = 230;
+    obstaclegp.add(obstacle);
+    obstacle.scale = 0.5;
+
+    var sorting = Math.round(random(1, 6));
+
+    switch (sorting) {
+      case 1: obstacle.addImage(obstacleImg1);
+
+        break;
+
+      case 2: obstacle.addImage(obstacleImg2);
+
+        break;
+
+      case 3: obstacle.addImage(obstacleImg3);
+
+        break;
+
+      case 4: obstacle.addImage(obstacleImg4);
+
+        break;
+
+      case 5: obstacle.addImage(obstacleImg5);
+
+        break;
+
+      case 6: obstacle.addImage(obstacleImg6);
+
+        break;
+
+
+    }
+  }
+
 }
