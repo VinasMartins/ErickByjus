@@ -15,7 +15,7 @@ function preload(){
   diamondsImg = loadImage("diamonds.png");
   jwelleryImg = loadImage("jwell.png");
   swordImg = loadImage("sword.png");
- // endImg =loadAnimation("gameOver.png");
+//  endImg =loadAnimation("gameOver.png");
 }
 
 function setup(){
@@ -71,7 +71,7 @@ function draw() {
     }
     else if(jwelleryG.isTouching(boy)) {
       jwelleryG.destroyEach();
-      //aumente a treasureCollection para 150
+      //aumente a treasureCollection para 1500
       treasureCollection = treasureCollection+150;
 
     }
