@@ -59,6 +59,8 @@ function setup() {
   Trex.addAnimation("Runner", TrexRunning);
   Trex.addAnimation("Collide",Trexcollide);
   Trex.scale = 0.5;
+  Trex.debug = false;
+  Trex.setCollider("circle",-5,15,30);
 
   ground = createSprite(300, 170, 600, 2);
   ground.addImage("ground", groundImg);
@@ -73,6 +75,12 @@ function setup() {
   gameOver = createSprite(300,80);
   gameOver.addImage(gameOverImg);
   gameOver.scale = 0.5;
+  gameOver.visible = false;
+
+  restart = createSprite(300,120);
+  restart.addImage(restartImg);
+  restart.scale = 0.5;
+  restart.visible = false;
 
 }
 //draw faz o movimento, a ação do jogo
@@ -117,10 +125,24 @@ function draw() {
     obstaclegp.setVelocityXEach(0);
     cloudgp.setLifetimeEach(-1);
     obstaclegp.setLifetimeEach(-1);
+    gameOver.visible = true;
+    restart.visible = true;
+
+    if(record < score){
+      record = score;
+    }
+
+    if(mousePressedOver(restart)){
+      gameState = play;
+      gameOver.visible = false;
+      restart.visible = false;
+      obstaclegp.destroyEach();
+      cloudgp.destroyEach();
+      Trex.changeAnimation("Runner", TrexRunning);
+
+    }
   
   }
-
-
 
   Trex.velocityY = Trex.velocityY + 0.5;
 
@@ -188,6 +210,7 @@ function createObstacle() {
 
 
     }
+
   }
 
 }
