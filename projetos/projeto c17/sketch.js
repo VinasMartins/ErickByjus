@@ -71,7 +71,7 @@ function draw() {
     }
     else if(jwelleryG.isTouching(boy)) {
       jwelleryG.destroyEach();
-      //aumente a treasureCollection para 150
+      //aumente a treasureCollection para 1500
       treasureCollection = treasureCollection+150;
 
     }
