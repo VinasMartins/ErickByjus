@@ -28,6 +28,8 @@ var gameOver,gameOverImg;
 
 var restart,restartImg;
 
+var jumpSound,deathSound,pointSound;
+
 //preload carrega as midías do jogo 
 function preload() {
   TrexRunning = loadAnimation("trex1.png", "trex3.png", "trex4.png");
@@ -48,6 +50,12 @@ function preload() {
   gameOverImg = loadImage("gameOver.png");
 
   restartImg = loadImage("restart.png");
+
+  jumpSound = loadSound("jump.mp3");
+
+  //deathSound = loadSound("die.mp3");
+
+  pointSound = loadSound("checkpoint.mp3");
 
 }
 //setup faz a aconfiguração
@@ -96,7 +104,15 @@ function draw() {
 
   if (gameState === play) {
     score += Math.round(frameCount / 60);
-    ground.velocityX = -10;
+
+    ground.velocityX = -(4+3*score /100);
+  
+    if(score > 0 && score %100 === 0){
+      pointSound.play();
+
+    }
+
+    
 
     if (ground.x < 0) {
       ground.x = ground.width / 2;
@@ -104,6 +120,7 @@ function draw() {
 
     if (keyDown("space") && Trex.y > 164) {
       Trex.velocityY = -11;
+      jumpSound.play();
 
     }
 
@@ -116,6 +133,7 @@ function draw() {
 
   if(Trex.isTouching(obstaclegp)){
     gameState = end;
+    deathSound.play();
   }
 
   if (gameState === end) {
@@ -160,7 +178,7 @@ function createCloud() {
 
   if (frameCount % 60 === 0) {
     cloud = createSprite(600, random(10, 100), 40, 10);
-    cloud.velocityX = -3;
+    cloud.velocityX = -(4+score /100);
     cloud.addImage(cloudImg);
     cloud.scale = random(0.4, 1.4);
     cloud.depth = Trex.depth - 1;
@@ -176,7 +194,7 @@ function createObstacle() {
 
   if (frameCount % 60 === 0) {
     obstacle = createSprite(600, 170, 40, 10);
-    obstacle.velocityX = -3;
+    obstacle.velocityX = -(4+score /100);
     obstacle.lifetime = 230;
     obstaclegp.add(obstacle);
     obstacle.scale = 0.5;
