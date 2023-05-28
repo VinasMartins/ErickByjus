@@ -8,7 +8,9 @@ var knifeImage , fruit1, fruit2 ,fruit3,fruit4, monsterImage, gameOverImage;
 
 var gameoverSound,knifeSound;
 
-var score = 100;
+var score = 1;
+
+var fruitGroup;
 
 function preload(){
   
@@ -35,6 +37,7 @@ function setup() {
    knife=createSprite(40,200,20,20);
    knife.addImage(knifeImage);
    knife.scale=0.7
+
   
   //definir colisor para espada
   knife.setCollider("rectangle",0,0,40,40);
@@ -70,7 +73,7 @@ function draw() {
         gameState=END;
         
         //adicione o som do gameover (fim de jogo) aqui
-        
+        gameoverSound = loadSound("gameover.mp3");
         fruitGroup.destroyEach();
         monsterGroup.destroyEach();
         fruitGroup.setVelocityXEach(0);
@@ -78,7 +81,7 @@ function draw() {
         
         // Mude a animação da espada para gameover (fim de jogo) e redefina sua posição
         knife.addImage(gameOverImage);
-        knife.scale=2;
+        knife.scale=1.5;
         knife.x=300;
         knife.y=300;
       }
@@ -111,20 +114,19 @@ function fruits(){
     fruit=createSprite(400,200,20,20);
     
      //usar uma variável aleatória para mudar a posição da fruta e tornar mais desafiador
-    
     if(position==1)
     {
     fruit.x=600;
     //atualize o código abaixo para aumentar a velocidade do fruitGroup (grupo de frutas) em 4
-    fruit.velocityX = -();
+    fruit.velocityX = -(1+1*score/8);
     }
     else
     {
       if(position==2){
       fruit.x=0;
       
-     //atualize o código abaixo para aumentar a velocidade do fruitGroup (grupo de frutas) em 4
-      fruit.velocityX= 7;
+     
+      
       }
     }
     
