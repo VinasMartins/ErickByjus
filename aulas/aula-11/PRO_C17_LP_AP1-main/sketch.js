@@ -61,7 +61,7 @@ function preload() {
 //setup faz a aconfiguração
 function setup() {
 
-  createCanvas(600, 200);
+  createCanvas(windowWidth,windowHeight);//600,200
 
   Trex = createSprite(50, 160, 20, 50);
   Trex.addAnimation("Runner", TrexRunning);
@@ -101,9 +101,8 @@ function draw() {
   text("Record: " + record, 450, 100);
 
 
-
   if (gameState === play) {
-    score += Math.round(frameCount / 60);
+    score += Math.round(getFrameRate() /60);
 
     ground.velocityX = -(4+3*score /100);
   
@@ -133,7 +132,7 @@ function draw() {
 
   if(Trex.isTouching(obstaclegp)){
     gameState = end;
-    deathSound.play();
+    //deathSound.play();
   }
 
   if (gameState === end) {
@@ -157,6 +156,7 @@ function draw() {
       obstaclegp.destroyEach();
       cloudgp.destroyEach();
       Trex.changeAnimation("Runner", TrexRunning);
+      score = 0;
 
     }
   
