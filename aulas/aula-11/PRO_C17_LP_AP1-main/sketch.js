@@ -63,29 +63,29 @@ function setup() {
 
   createCanvas(windowWidth,windowHeight);//600,200
 
-  Trex = createSprite(50, 160, 20, 50);
+  Trex = createSprite(50,height-40,20,50);
   Trex.addAnimation("Runner", TrexRunning);
   Trex.addAnimation("Collide",Trexcollide);
   Trex.scale = 0.5;
   Trex.debug = false;
   Trex.setCollider("circle",-5,15,30);
 
-  ground = createSprite(300, 170, 600, 2);
+  ground = createSprite(width/2,height-30,width,2);
   ground.addImage("ground", groundImg);
 
-  invisibleground = createSprite(300, 190, 600, 2);
+  invisibleground = createSprite(width/2,height-10,width,2);
   invisibleground.visible = false;
 
   obstaclegp = new Group(); 
 
   cloudgp = new Group();
 
-  gameOver = createSprite(300,80);
+  gameOver = createSprite(width/2,height-120);
   gameOver.addImage(gameOverImg);
   gameOver.scale = 0.5;
   gameOver.visible = false;
 
-  restart = createSprite(300,120);
+  restart = createSprite(width/2,height-80);
   restart.addImage(restartImg);
   restart.scale = 0.5;
   restart.visible = false;
@@ -97,8 +97,8 @@ function draw() {
 
   textSize(18);
   fill("black");
-  text("Score: " + score, 450, 80);
-  text("Record: " + record, 450, 100);
+  text("Score: " + score,width-150,height-120);
+  text("Record: " + record,width-150,height-100);
 
 
   if (gameState === play) {
@@ -113,13 +113,14 @@ function draw() {
 
     
 
-    if (ground.x < 0) {
+    if (ground.x < 800) {
       ground.x = ground.width / 2;
     }
 
-    if (keyDown("space") && Trex.y > 164) {
+    if (touches.length > 0 || keyDown("space") && Trex.y > height-40) {
       Trex.velocityY = -11;
       jumpSound.play();
+      touches = [];
 
     }
 
@@ -177,12 +178,12 @@ function draw() {
 function createCloud() {
 
   if (frameCount % 60 === 0) {
-    cloud = createSprite(600, random(10, 100), 40, 10);
+    cloud = createSprite(width, random(height-190,height-100), 40, 10);
     cloud.velocityX = -(4+score /100);
     cloud.addImage(cloudImg);
     cloud.scale = random(0.4, 1.4);
     cloud.depth = Trex.depth - 1;
-    cloud.lifetime = 230;
+    cloud.lifetime = width/cloud.velocityX;
     cloudgp.add(cloud);
 
 
@@ -193,9 +194,9 @@ function createCloud() {
 function createObstacle() {
 
   if (frameCount % 60 === 0) {
-    obstacle = createSprite(600, 170, 40, 10);
+    obstacle = createSprite(width,height-30, 40, 10);
     obstacle.velocityX = -(4+score /100);
-    obstacle.lifetime = 230;
+    obstacle.lifetime = width/300;
     obstaclegp.add(obstacle);
     obstacle.scale = 0.5;
 
