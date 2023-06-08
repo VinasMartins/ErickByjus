@@ -26,6 +26,7 @@ function setup(){
 
   portaGrupo = new Group();
   gradeGrupo = new Group();
+  blocoInvisivelGp = new Group();
 
 
 }
@@ -39,6 +40,15 @@ function draw(){
       }
 
       createAll();
+
+      if(fantasma.isTouching(gradeGrupo)){
+        fantasma.velocityY = 0;
+      }
+
+      if(fantasma.isTouching(blocoInvisivelGp)||fantasma.y >600){
+        fantasma.destroy();
+        gameState = "end";
+      }
 
       drawSprites();
 
@@ -60,7 +70,10 @@ function draw(){
     }
 
     if(gameState === "end"){
-
+      stroke("red");
+      fill("red");
+      textSize(30);
+      text("Você perdeu o jogo!",200,300);
     }
 
   }
@@ -69,24 +82,32 @@ function draw(){
     if(frameCount %240 === 0){
       porta = createSprite(200,-50);
       grade = createSprite(200,10);
+      blocoInvisivel = createSprite(200,15);
 
       porta.velocityY = 1;
       grade.velocityY = 1;
+      blocoInvisivel.width = grade.width;
+      blocoInvisivel.height = 2;
+      blocoInvisivel.velocityY = 1;
 
       porta.addImage(imagemPorta);
       grade.addImage(imagemGrade);
+      fantasma.depth = porta.depth;
+      fantasma.depth +=1;
 
       porta.x = Math.round(random(120,400));
       grade.x = porta.x;
+      blocoInvisivel.x = porta.x;
 
       porta.lifetime = 800;
       grade.lifetime = 800;
+      blocoInvisivel.lifetime = 800;
 
       portaGrupo.add(porta);
       gradeGrupo.add(grade);
+      blocoInvisivelGp.add(blocoInvisivel);
 
     }  
 
           
   }
-  
