@@ -15,35 +15,36 @@ function preload(){
   diamondsImg = loadImage("diamonds.png");
   jwelleryImg = loadImage("jwell.png");
   swordImg = loadImage("sword.png");
-  endImg =loadAnimation("gameOver.png");
+  gover = loadImage("gameOver.png");
+  //Remova os comentários corretos da linha de código para carregar a imagem gameOver.png
+  
+  //gover=gameOver.png;
+  
+  //gameOver.png=Load();
+  
+  //gover = loadImage("gameOver.png");
 }
 
 function setup(){
   
-  createCanvas(windowWidth,windowHeight);
-  // Movendo plano de fundo
-  path=createSprite(width/2,200);
-  path.addImage(pathImg);
-  path.velocityY = 4;
+  createCanvas(400,600);
+// Movendo o fundo
+  
+path=createSprite(200,200);
+path.addImage(pathImg);
+path.velocityY = 4;
 
 
-  //criar menino correndo 
-  boy = createSprite(width/2,height-20,20,20);
-  boy.addAnimation("SahilRunning",boyImg);
-  boy.scale=0.08;
+//criar menino correndo 
+boy = createSprite(70,580,20,20);
+boy.addAnimation("SahilRunning",boyImg);
+boy.scale=0.08;
+  
 
-  cash = createSprite(Math.round(random(50,width-50),40,10,10));
-
-  diamonds = createSprite(Math.round(random(60,width-60),50,10,10));
-
-  jwellery = createSprite(Math.round(random(70,width-70),60,10,10));
-
-  sword = createSprite(Math.round(random(80,width-80),70,10,10));
-
-  cashG=new Group();
-  diamondsG=new Group();
-  jwelleryG=new Group();
-  swordGroup=new Group();
+cashG=new Group();
+diamondsG=new Group();
+jwelleryG=new Group();
+swordGroup=new Group();
 
 }
 
@@ -56,8 +57,8 @@ function draw() {
   edges= createEdgeSprites();
   boy.collide(edges);
   
-  //código para redefinir plano de fundo
-  if(path.y > height ){
+  //código para redefinir o fundo
+  if(path.y > 400 ){
     path.y = height/2;
   }
   
@@ -81,11 +82,7 @@ function draw() {
     }else{
       if(swordGroup.isTouching(boy)) {
         gameState=END;
-        
-        boy.addAnimation("SahilRunning",endImg);
-        boy.x=width/2;
-        boy.y=height/2;
-        boy.scale=0.6;
+       
         
         cashG.destroyEach();
         diamondsG.destroyEach();
@@ -96,6 +93,19 @@ function draw() {
         diamondsG.setVelocityYEach(0);
         jwelleryG.setVelocityYEach(0);
         swordGroup.setVelocityYEach(0);
+        //Remova os comentários corretos da linha de código para exibir 'game over' (fim de jogo)
+
+        //  over = createSprite(880,9980,20,20);
+        //  over.addAnimation("gameover",gover);
+        //  over.scale=0.7
+
+        over = createSprite(180,280,20,20);
+        over.addAnimation("gameover",gover);
+        over.scale=0.7
+
+        //  over = createSprite(180,280,20,20);
+        //  over.addAnimation(gover);
+        //  over.scale=0.7
      
     }
   }
@@ -103,14 +113,14 @@ function draw() {
   drawSprites();
   textSize(20);
   fill(255);
-  text("Tesouro: "+ treasureCollection,width-150,30);
+  text("Treasure: "+ treasureCollection,10,30);
   }
 
 }
 
 function createCash() {
   if (World.frameCount % 200 == 0) {
-  var cash = createSprite(Math.round(random(50,width-50),40, 10, 10));
+  var cash = createSprite(Math.round(random(50, 350),40, 10, 10));
   cash.addImage(cashImg);
   cash.scale=0.12;
   cash.velocityY = 3;
@@ -121,7 +131,7 @@ function createCash() {
 
 function createDiamonds() {
   if (World.frameCount % 320 == 0) {
-  var diamonds = createSprite(Math.round(random(50,width-50),40, 10, 10));
+  var diamonds = createSprite(Math.round(random(50, 350),40, 10, 10));
   diamonds.addImage(diamondsImg);
   diamonds.scale=0.03;
   diamonds.velocityY = 3;
@@ -132,7 +142,7 @@ function createDiamonds() {
 
 function createJwellery() {
   if (World.frameCount % 410 == 0) {
-  var jwellery = createSprite(Math.round(random(50,width-50),40, 10, 10));
+  var jwellery = createSprite(Math.round(random(50, 350),40, 10, 10));
   jwellery.addImage(jwelleryImg);
   jwellery.scale=0.13;
   jwellery.velocityY = 3;
@@ -143,7 +153,7 @@ function createJwellery() {
 
 function createSword(){
   if (World.frameCount % 530 == 0) {
-  var sword = createSprite(Math.round(random(50, width-50),40, 10, 10));
+  var sword = createSprite(Math.round(random(50, 350),40, 10, 10));
   sword.addImage(swordImg);
   sword.scale=0.1;
   sword.velocityY = 3;

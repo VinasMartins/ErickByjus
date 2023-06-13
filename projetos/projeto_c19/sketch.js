@@ -123,8 +123,8 @@ function draw() {
     gameOver.visible = true;
     //Acrescente o código para mostrar o texto da instrução space (espaço) aqui
     textSize(20);
-    fill(250);
-    text("Aperte o botão de seta para cima, para reiniciar.",300,30);
+    fill("red");
+    text("Aperte o botão de seta para cima, para reiniciar.",300,100);
   
   
     path.velocityX = 0;
@@ -141,7 +141,7 @@ function draw() {
     redCG.setLifetimeEach(-1);
 
     //escreva uma condição para chamar a função reset()
-    if(keyDown("up")){
+    if(keyDown("UP_ARROW")){
       reset();
     }
 }
