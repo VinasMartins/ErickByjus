@@ -12,13 +12,24 @@ var ball;
 
 var ground;
 
+var button;
+
+var fun;
+
+var angle = 60;
+
 function setup() {
     createCanvas(400,400);
 
     engine = Engine.create();
     world = engine.world;
 
-    var ballOpitions ={restitution:1,frictionAir:0.2}
+    button = createImg("up.png");
+    button.position(250,60);
+    button.size(60,60);
+    button.mouseClicked(vForce);
+
+    var ballOpitions ={restitution:1,frictionAir:0.01}
 
     ball = Bodies.circle(100,10,20,ballOpitions);
     
@@ -26,11 +37,13 @@ function setup() {
 
     var opitions = {isStatic:true}
 
-    ground = Bodies.rectangle(200,400,400,20,opitions);
+    ground = Bodies.rectangle(100,400,600,20,opitions);
 
     World.add(world,ground);
 
-   
+    fun = Bodies.rectangle(100,300,100,20,opitions);
+    World.add(world,fun);
+
 }
 
 function draw(){
@@ -41,7 +54,19 @@ function draw(){
     ellipse(ball.position.x,ball.position.y,20);
 
     rectMode(CENTER);
-    rect(ground.position.x,ground.position.y,400,200);
+    rect(ground.position.x,ground.position.y,600,20);
+
+    push(Matter.Body.rotate(fun,angle));
+    translate(fun.position.x,fun.position.y);
+    rotate(angle);
+    rect(0,0,100,20);
+    pop();
+    angle +=0.1;
     
+}
+
+function vForce(){
+    Matter.Body.applyForce(ball,{x:0,y:0},{x:-0.03,y:-0.03})
+
 }
 
