@@ -18,6 +18,10 @@ var fun;
 
 var angle = 60;
 
+var fun1,fun2,fun3,fun4;
+
+var ground3,ground4;
+
 function setup() {
     createCanvas(400,400);
 
@@ -38,11 +42,21 @@ function setup() {
     var opitions = {isStatic:true}
 
     ground = Bodies.rectangle(100,400,600,20,opitions);
-
     World.add(world,ground);
 
     fun = Bodies.rectangle(100,300,100,20,opitions);
     World.add(world,fun);
+
+    fun1 = new Ground(50,370,50,30);
+    fun2 = new Ground(150,370,50,30);
+    fun3 = new Ground(250,370,50,30);
+    fun4 = new Ground(350,370,50,30);
+
+    ground3 = Bodies.rectangle(10,200,20,400,opitions);
+    World.add(world,ground3);
+
+    ground4 = Bodies.rectangle(390,200,20,400,opitions);
+    World.add(world,ground4);
 
 }
 
@@ -55,6 +69,8 @@ function draw(){
 
     rectMode(CENTER);
     rect(ground.position.x,ground.position.y,600,20);
+    rect(ground3.position.x,ground3.position.y,20,400);
+    rect(ground4.position.x,ground4.position.y,20,400);
 
     push(Matter.Body.rotate(fun,angle));
     translate(fun.position.x,fun.position.y);
@@ -62,11 +78,16 @@ function draw(){
     rect(0,0,100,20);
     pop();
     angle +=0.1;
+
+    fun1.display();
+    fun2.display();
+    fun3.display();
+    fun4.display();
     
 }
 
 function vForce(){
-    Matter.Body.applyForce(ball,{x:0,y:0},{x:-0.03,y:-0.03})
+    Matter.Body.applyForce(ball,{x:0,y:0},{x:-0.03,y:-0.03});
 
 }
 
