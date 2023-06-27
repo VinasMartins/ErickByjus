@@ -22,6 +22,8 @@ var fun1,fun2,fun3,fun4;
 
 var ground3,ground4;
 
+var con;
+
 function setup() {
     createCanvas(400,400);
 
@@ -38,6 +40,15 @@ function setup() {
     ball = Bodies.circle(100,10,20,ballOpitions);
     
     World.add(world,ball);
+
+    con = Matter.Constraint.create({
+        pointA:{x:200,y:100},
+        bodyB:ball,
+        pointB:{x:0,y:0},
+        length:100,
+        stiffness:0.1
+    })
+    World.add(world,con);
 
     var opitions = {isStatic:true}
 
@@ -83,11 +94,17 @@ function draw(){
     fun2.display();
     fun3.display();
     fun4.display();
+
+    push();
+    strokeWeight(5);
+    stroke("red");
+    line(con.pointA.x,con.pointA.y,ball.position.x,ball.position.y);
+    pop();
     
 }
 
 function vForce(){
-    Matter.Body.applyForce(ball,{x:0,y:0},{x:-0.03,y:-0.03});
+    Matter.Body.applyForce(ball,{x:0,y:0},{x:0.05,y:0});
 
 }
 
