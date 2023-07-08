@@ -5,18 +5,17 @@ const Constraint = Matter.Constraint;
 const Body = Matter.Body;
 
 var engine, world;
-
-var backgroundImg;
-
-var tower,towerImg;
-
-var cannon;
-
-var angle = 20;
+var bgImg;
+var tower,towerImg ; 
+var cannon ;
+var angle = 20 ;
+var cannonBall;
 
 function preload() {
-  backgroundImg = loadImage("./assets/background.gif");
-  towerImg = loadImage("./assets/tower.png");
+  bgImg = loadImage("./assets/background.gif");
+towerImg=loadImage("./assets/tower.png");
+
+
 
 }
 
@@ -33,28 +32,40 @@ function setup() {
   ground = Bodies.rectangle(0, height - 1, width * 2, 1, options);
   World.add(world, ground);
 
-  tower = Bodies.rectangle(160,350,160,310,options);
+   tower =Bodies.rectangle(160,350,160,310,options);
   World.add(world,tower);
 
-  cannon = new Cannon(180,110,130,100,angle);
+  angleMode(DEGREES);
+  angle = 15;
 
-  rectMode(CENTER);
+ cannon =new Cannon (180,110,130,100,angle );
 
+ cannonBall = new CannonBall(cannon.x,cannon.y);
+  
 }
  
 
 function draw() {
 
- background("darkblue")
- image(backgroundImg,0,0,1200,600);
+  rectMode(CENTER);
 
+ background("darkblue")
+ image(bgImg,0,0,1200,600);
   Engine.update(engine);
   rect(ground.position.x, ground.position.y, width * 2, 1);
-  push();
-  imageMode(CENTER);
-  image(towerImg,tower.position.x,tower.position.y,160,310);
-  pop();
 
-  cannon.display();
+  push ();
+  imageMode (CENTER);
+  image (towerImg,tower.position.x,tower.position.y,160,310);
+  pop ();
+
+  cannon.display ();
+  cannonBall.display();
+}
+
+function keyReleased(){
+  if(keyCode === DOWN_ARROW){
+    cannonBall.shoot();
+  }
 }
 
