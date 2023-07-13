@@ -184,7 +184,3 @@ function reset(){
   distance = 0;
   mainCyclist.addAnimation("SahilRunning",mainRacerImg1);
 }
-
-
-
-
