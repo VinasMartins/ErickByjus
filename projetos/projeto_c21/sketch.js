@@ -50,7 +50,6 @@ function draw(){
       }
 
       drawSprites();
-
       // conforme for antando acumule e mostre a pontuação do foguete até o momento do jogo
 
       if(keyDown("left_arrow")){
