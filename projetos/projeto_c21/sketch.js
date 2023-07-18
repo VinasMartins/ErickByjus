@@ -38,7 +38,7 @@ function setup(){
 function draw(){
   background(0);
   
-  text("X: " + mouseX + "/ Y: " + mouseY, mouseX, mouseY);
+  // text("X: " + mouseX + "/ Y: " + mouseY, mouseX, mouseY);
 
   if(gameState === "play"){
     // if(frameCount %180 === 0)
