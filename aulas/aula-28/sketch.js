@@ -18,12 +18,17 @@ var balls = [];
 
 var boats = [];
 
+var boatAnimation = [];
+
+var boatSpriteData;
+
+var boatSpriteSheet;
+
 function preload() {
   bgImg = loadImage("./assets/background.gif");
-towerImg=loadImage("./assets/tower.png");
-
-
-
+  towerImg = loadImage("./assets/tower.png");
+  boatSpriteData = loadJSON("./assets/boat/boat.json");
+  boatSpriteSheet = loadImage("./assets/boat/boat.png");
 }
 
 function setup() {
@@ -47,6 +52,14 @@ function setup() {
 
  cannon =new Cannon (180,110,130,100,angle );
 
+ var boatFrames = boatSpriteData.frames;
+
+ for (let i = 0; i < boatFrames.length; i++) {
+    var pos = boatFrames[i].position;
+    var img = boatSpriteSheet.get(pos.x,pos.y,pos.w,pos.h);
+    boatAnimation.push(img);
+ }
+
 }
  
 
@@ -69,6 +82,7 @@ function draw() {
 
   for(let i= 0; i < balls.length; i++) {
     showCannonBalls(balls[i],i);
+    collisonWithBoat(i);
   }
 }
 
@@ -98,7 +112,7 @@ function showBoats(){
       boats[boats.length-1].body.position.x <width-300){
       var positions = [-40,-60,-20,-50];
       var position = random(positions);
-      var boat = new Boat(width-79,height-60,170,170,position);
+      var boat = new Boat(width-79,height-60,170,170,position,boatAnimation);
       boats.push(boat);
 
     }
@@ -107,12 +121,29 @@ function showBoats(){
       if(boats[i]){
         Matter.Body.setVelocity(boats[i].body,{x:-0.9,y:0});
         boats[i].display();
+        boats[i].animate();
       }
     }
   } else {
-    var boat = new Boat(width-79,height-60,170,170,-80);
+    var boat = new Boat(width-79,height-60,170,170,-80,boatAnimation);
     boats.push(boat);
 
   }
+}
+
+function collisonWithBoat(index){
+  for(let i = 0; i < boats.length; i++) {
+    if (balls[index]!== undefined && boats[i]!== undefined) {
+      var collision = Matter.SAT.collides(balls[index].body,boats[i].body);
+      
+      if (collision.collided) {
+        boats[i].remove(i);
+        Matter.World.remove(world,balls[index].body);
+        delete balls[index];
+      }
+
+    }
+  }
+
 }
 
