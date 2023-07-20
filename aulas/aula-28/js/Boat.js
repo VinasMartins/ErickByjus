@@ -5,9 +5,11 @@ class Boat{
         this.boatPos = boatPos;
         this.boatAnimation = boatAnimation;
         this.speed = 0.05;
+        this.isBroken = false;
         this.image = loadImage("./assets/boat.png");
         this.body = Bodies.rectangle(x,y,w,h,boatPos);
         World.add(world,this.body);
+        this.body.debug = true;
     }
 
     animate(){
@@ -15,6 +17,11 @@ class Boat{
     }
 
     remove(index){
+        this.boatAnimation = brokenBoatAnimation;
+        this.speed = 0.05;
+        //this.width = 00;
+        //this.height = 600;
+        this.isBroken = true;
         setTimeout(() => {
             Matter.World.remove(world,boats[index].body);
             delete boats[index];
@@ -24,7 +31,7 @@ class Boat{
     display(){
         var pos = this.body.position;
         var angle = this.body.angle;
-        var index = floor(this.speed % this.boatAnimation.length)
+        var index = floor(this.speed % this.boatAnimation.length);
 
         push();
         translate(pos.x,pos.y);

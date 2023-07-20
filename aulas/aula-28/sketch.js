@@ -24,11 +24,31 @@ var boatSpriteData;
 
 var boatSpriteSheet;
 
+var brokenBoatAnimation = [];
+
+var brokenBoatSpriteData;
+
+var brokenBoatSpriteSheet;
+
+var waterAnimation = [];
+
+var waterSpriteData;
+
+var waterSpriteSheet;
+
 function preload() {
   bgImg = loadImage("./assets/background.gif");
+
   towerImg = loadImage("./assets/tower.png");
+
   boatSpriteData = loadJSON("./assets/boat/boat.json");
   boatSpriteSheet = loadImage("./assets/boat/boat.png");
+
+  brokenBoatSpriteData = loadJSON("./assets/boat/broken_boat.json");
+  brokenBoatSpriteSheet = loadImage("./assets/boat/broken_boat.png");
+
+  waterSpriteData = loadJSON("./assets/water_splash/water_splash.json");
+  waterSpriteSheet = loadImage("./assets/water_splash/water_splash.png");
 }
 
 function setup() {
@@ -58,6 +78,22 @@ function setup() {
     var pos = boatFrames[i].position;
     var img = boatSpriteSheet.get(pos.x,pos.y,pos.w,pos.h);
     boatAnimation.push(img);
+ }
+
+ var brokenBoatFrames = brokenBoatSpriteData.frames;
+
+ for (let i = 0; i < brokenBoatFrames.length; i++) {
+    var pos = brokenBoatFrames[i].position;
+    var img = brokenBoatSpriteSheet.get(pos.x,pos.y,pos.w,pos.h);
+    brokenBoatAnimation.push(img);
+ }
+
+ var waterFrames = waterSpriteData.frames;
+
+ for (let i = 0; i < waterFrames.length; i++) {
+    var pos = waterFrames[i].position;
+    var img = waterSpriteSheet.get(pos.x,pos.y,pos.w,pos.h);
+    waterAnimation.push(img);
  }
 
 }
@@ -102,6 +138,7 @@ function keyPressed(){
 function showCannonBalls(ball,i){
   if(ball){
     ball.display();
+    ball.animate();
   }
 
 }
