@@ -227,7 +227,7 @@ function showBoats() {
 
 function keyReleased() {
 
-  if (keyCode === DOWN_ARROW ) {
+  if (isGameOver === false && keyCode === DOWN_ARROW) {
     cannonExplosion.play();
     cannonExplosion.setVolume(0.3);
 
