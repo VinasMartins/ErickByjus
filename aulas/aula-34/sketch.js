@@ -238,11 +238,11 @@ function keyReleased() {
 
 function gameOver() {
   swal ({
-    title:"Voce perdeu o jogo guerreiro mas nao suportou meu canhao!",
+    title:"Voce perdeu o jogo guerreiro, pois nao suportou meu canhao!",
     text:"obrigado por jogar meu jogo voce e um verdadeiro guerreiro",
     imageUrl:"https://raw.githubusercontent.com/whitehatjr/PiratesInvasion/main/assets/boat.png",
     imageSize:"150x150",
-    confirmButtonText:"voce quer jogar de novo,preparece para batalha"
+    confirmButtonText:"Voce quer jogar de novo?\nPrepare-se para batalha!"
   },
   function(isConfirm){
     if (isConfirm) {
