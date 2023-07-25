@@ -152,7 +152,7 @@ function collisionWithBoat(index) {
 }
 
 function keyPressed() {
-  if (keyCode === DOWN_ARROW) {
+  if (keyCode === DOWN_ARROW && isGameOver === false) {
     var cannonBall = new CannonBall(cannon.x, cannon.y);
     cannonBall.trajectory = [];
     Matter.Body.setAngle(cannonBall.body, cannon.angle);
@@ -161,7 +161,7 @@ function keyPressed() {
 }
 
 function showCannonBalls(ball, index) {
-  if (ball) {
+  if (ball && isGameOver === false) {
     ball.display();
   // if(ball.body.position.x<=width-300){
     ball.animate();
