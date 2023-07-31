@@ -11,6 +11,7 @@ class PlayerArrow {
     this.body = Bodies.rectangle(x, y, this.width, this.height, options);
     this.image = loadImage("./assets/arrow.png");
     //escreva um código para definir uma matriz chamada trajectory (trajetória)
+    this.trajectory = [];
    
     
     World.add(world, this.body);
@@ -34,17 +35,15 @@ class PlayerArrow {
 
       if (this.body.velocity.x > 0 && this.body.position.x > 400) {
         var position = [this.body.position.x, this.body.position.y];
-        /****escreva um 
-         código para adicionar a posição 
-         atual da flecha a 
-        matriz trajectory (trajetória)**/
+        this.trajectory.push(position);
       
       }
   
 
-      /****escreva um código correto para adicionar o loop for e exibir pequenos pontos
-           em todas as posições armazenadas na matriz trajectory (trajetória)
-           *******/
+      for (let i = 0; i < this.trajectory.length; i++) {
+        fill("white");
+        ellipse(this.trajectory[i][0],this.trajectory[i][1],5,5);
+      }
      
   
   }
