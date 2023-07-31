@@ -61,7 +61,7 @@ function setup() {
 function draw() {
 
   //exibir a imagem de fundo
-  background("blackground.gif");
+  background(backgroundImg);
   
 
   Engine.update(engine);
