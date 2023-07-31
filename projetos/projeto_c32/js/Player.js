@@ -25,7 +25,7 @@ class Player {
 
     // crie a vida em forma de retângulo
     fill(this.life1);
-    rect(width - 1245, 50, 70, 30);
+    rect(width - 1220, 50, 70, 30);
     fill(this.life2);
     rect(width - 1290, 50, 70, 30);
     fill(this.life3);
