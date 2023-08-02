@@ -83,9 +83,7 @@ function setup() {
   button2.size(50,50);
 
  // escreva um bloco de código correto para adicionar um botão para cortar a corda
-  button3 = createImg('cut_button.png');
-  button3.position(50,150);
-  button3.size(100,100);
+ button2.mouseClicked(drop);
  
 
   ellipseMode(RADIUS);
