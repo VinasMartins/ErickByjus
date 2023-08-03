@@ -58,17 +58,17 @@ function setup() {
   //sprite de coelho
   blink.frameDelay = 20;
   eat.frameDelay = 20;
-  bunny = createSprite(270,100,100,100);
+  bunny = createSprite(270,130,100,100);
   bunny.addImage(rabbit);
   bunny.scale = 0.2;
-  higherground =new Ground(300,170,100,10);
+  higherground =new Ground(300,200,100,10);
 
   bunny.addAnimation('blinking',blink);
   bunny.addAnimation('eating',eat);
   bunny.addAnimation('crying',sad);
   bunny.changeAnimation('blinking');
 
-  rope = new Rope(4,{x:230,y:330});
+  rope = new Rope(5,{x:230,y:330});
   rope2 = new Rope(4,{x:50,y:450});
   con = new Link(rope,fruit);
   con2 = new Link(rope2,fruit);
@@ -114,7 +114,7 @@ function draw()
     World.remove(engine.world,fruit);
     fruit = null;
    //Código para alterar a animação do coelho quando uma colisão for detectada.
-   rabbit.collision("sad_1.png","sad_2.png","sad_3.png");
+   bunny.changeAnimation("eating");
   }
   
   if(collide(fruit,bubble,40) == true)
