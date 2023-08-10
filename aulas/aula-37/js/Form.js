@@ -31,11 +31,16 @@ class Form {
     this.playButton.mousePressed(()=>{
       this.input.hide();
       this.playButton.hide();
+      playerCount +=1;
       this.nick = this.input.value() === "" ? "player" +playerCount:this.input.value();
       var mesage = `
       bem vindo ao jogo,${this.nick}
       </br> Está preparado para jogar?Ative seu turbo para ganhar a corrida!`
       this.greeting.html(mesage);
+      player.name = this.nick;
+      player.index = playerCount;
+      player.addPlayer();
+      player.updateCount(playerCount);
     })
   }
 
