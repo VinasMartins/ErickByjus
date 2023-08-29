@@ -126,8 +126,8 @@ class Game {
            this.update(gameState);
            // descomente e corrija um desses para aumentar a classificação de um jogador em 1 e atualizar no banco de dados.
            
-          //  player.rank += 1;
-          //  player.updateanimalsAtEnd(player.rank);
+            player.rank += 1;
+            player.updateanimalsAtEnd(player.rank);
 
           //  rank += 1;
           //  Player.updateanimalsAtEnd(rank);
@@ -206,7 +206,7 @@ class Game {
   handleGrass(index) {
     animals[index - 1].overlap(grass, function(collector, collected) {
       //Remova o comentário da linha de código correta entre essas 4, para aumentar a pontuação em 21 pontos.
-      //player.score += 21;
+      player.score += 21;
       // score += 21;
       // player.score + 21;
       // player += 21;
