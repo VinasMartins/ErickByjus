@@ -78,3 +78,10 @@ canvas {
   border-radius: 30px;
   outline:none;
 }
+
+.leadersText{
+  font-size: 20px;
+  color:red;
+  font-family: vollkorn;
+  text-align: center;
+}

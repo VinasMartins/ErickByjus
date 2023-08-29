@@ -2,6 +2,10 @@ class Game {
   constructor() {
     this.resetTitle = createElement("h2");
     this.resetButton = createButton("");
+
+    this.leaderboardTitle = createElement("h2");
+    this.leader1 = createElement("h2");
+    this.leader2 = createElement("h2");
   }
    getState (){
     var gameStateRef = database.ref ("gameState");
@@ -46,6 +50,16 @@ class Game {
 
     this.resetButton.class("resetButton");
     this.resetButton.position(width/2+230,100);
+
+    this.leaderboardTitle.html("Placar");
+    this.leaderboardTitle.class("resetText");
+    this.leaderboardTitle.position(width/3-60,40);
+
+    this.leader1.class("leadersText");
+    this.leader1.position(width/3-50,80);
+
+    this.leader1.class("leadersText");
+    this.leader1.position(width/3-50,130);
    }
 
   play () { 
@@ -95,6 +109,16 @@ class Game {
       player.positionY += 10;
       player.update();
     }
+
+    if (keyIsDown(LEFT_ARROW)&&player.positionX > width/3-50 || keyDown("A")&&player.positionX > width/3-50) {
+      player.positionX -=5;
+      player.update();
+    }
+
+    if (keyIsDown(RIGHT_ARROW)&&player.positionX < width/2+300 || keyDown("D")&&player.positionX < width/2+300) {
+      player.positionX +=5;
+      player.update();
+    }
   }
 
   handleResetButton(){
@@ -107,5 +131,47 @@ class Game {
 
       window.location.reload();
     });
+  }
+
+  showLeaderBoard(){
+    var leader1,leader2;
+    
+    var players = Object.values(allPlayers);
+
+    if ((players[0].rank === 0 && players[1].rank === 0) || 
+    players[0].rank === 1) {
+      leader1 = 
+      players[0].rank+
+      "&emsp;"+
+      players[0].name+
+      "&emsp;"+
+      players[0].score;
+      
+      leader2 = 
+      players[1].rank+
+      "&emsp;"+
+      players[1].name+
+      "&emsp;"+
+      players[1].score;
+    }
+
+    if (players[1].rank === 1) {
+      leader1 = 
+      players[1].rank+
+      "&emsp;"+
+      players[1].name+
+      "&emsp;"+
+      players[1].score;
+      
+      leader2 = 
+      players[0].rank+
+      "&emsp;"+
+      players[0].name+
+      "&emsp;"+
+      players[0].score;
+    }
+
+    this.leader1.html(leader1);
+    this.leader2.html(leader2);
   }
 }
