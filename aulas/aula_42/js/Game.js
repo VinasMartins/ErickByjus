@@ -66,6 +66,7 @@ class Game {
     this.handleElements () ;
     this.handleResetButton();
     Player.getPlayersInfo ();
+    player.getCarsAtEnd();
 
     
     if (allPlayers !== undefined) {
@@ -97,6 +98,16 @@ class Game {
 
       this.handlePlayerControls();
 
+      const finishLine = height*6-100;
+
+      if (player.positionY > finishLine) {
+        gameState = 2;
+        player.rank +=1;
+        Player.updateCarsAtEnd(player.rank);
+        player.update();
+        this.showRank();
+      }
+
       drawSprites ();
     }
   }
@@ -126,6 +137,7 @@ class Game {
       database.ref("/").set({
         playerCount:0,
         gameState:0,
+        carsAtEnd:0,
         players:{},
       });
 
@@ -173,5 +185,15 @@ class Game {
 
     this.leader1.html(leader1);
     this.leader2.html(leader2);
+  }
+
+  showRank(){
+    swal({
+      title:`Incrivel!${"\n"}Rank${"\n"}${player.rank}`,
+      text:"Parabens voce chegou na linha de chegada!!",
+      imageUrl:"https://raw.githubusercontent.com/vishalgaddam873/p5-multiplayer-car-race-game/master/assets/cup.png",
+      imageSize:"100x100",
+      confirmButtonText:"ok"
+    })
   }
 }
