@@ -6,12 +6,16 @@ var allPlayers;
 var car1,car2,carimg1,carimg2;
 var track;
 var cars = [];
+var lifeImage;
+var fuelImage;
 
 function preload() {
   backgroundImage = loadImage("./assets/planodefundo.png");
  carimg1 = loadImage ("./assets/car1.png");
  carimg2 = loadImage ("./assets/car2.png");
  track = loadImage ("./assets/track.jpg");
+ lifeImage = loadImage("./assets/life.png");
+ fuelImage = loadImage("./assets/fuel.png");
 }
 
 function setup() {
