@@ -6,21 +6,22 @@ class Game {
     this.leaderboardTitle = createElement("h2");
     this.leader1 = createElement("h2");
     this.leader2 = createElement("h2");
+    this.playerMoving = false;
   }
-   getState (){
+    getState (){
     var gameStateRef = database.ref ("gameState");
     gameStateRef.on ("value",function(data){
       gameState = data.val ();
 
     })
-     }
+    }
 
-     update (state){
+    update (state){
       database.ref ("/").update ({
         gameState :state ,
         
       })
-     }
+    }
  
 
   start() {
@@ -72,6 +73,10 @@ class Game {
     if (allPlayers !== undefined) {
       image(track, 0, -height * 5, width, height * 6);
 
+      this.showLife();
+      this.showFuelBar();
+      this.showLeaderBoard();
+
        //índice da matriz
       var index = 0;
       for (var plr in allPlayers) {
@@ -88,6 +93,7 @@ class Game {
           stroke(10);
           fill("red");
           ellipse(x, y, 60, 60);
+          this.handleFuel(index);
 
          
    
@@ -185,6 +191,34 @@ class Game {
 
     this.leader1.html(leader1);
     this.leader2.html(leader2);
+  }
+
+  showLife(){
+    push();
+    image(lifeImage,width/2-130,height-player.positionY-280,20,20);
+    fill("white");
+    rect(width/2-100,height-player.positionY-280,185,20);
+    fill("red");
+    rect(width/2-100,height-player.positionY-280,player.life,20);
+    noStroke();
+    pop();
+  }
+
+  showFuelBar(){
+    push();
+    image(fuelImage,width/2-130,height-player.positionY-330,20,20);
+    fill("white");
+    rect(width/2-100,height-player.positionY-330,185,20);
+    fill("yellow");
+    rect(width/2-100,height-player.positionY-330,player.fuel,20);
+    noStroke();
+    pop();
+  }
+
+  handleFuel(index){
+    if (player.fuel > 0 && this.playerMoving) {
+      player.fuel -=0.3;
+    }
   }
 
   showRank(){
