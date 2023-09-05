@@ -67,8 +67,8 @@ class Game{
                     
                          textSize(25);
                          fill("white");
-                         text("Jogador 1 :" +allPlayers.player1.score,50,50);
-                        text("Jogador 2 :" + allPlayers.player2.score, 50, 100);
+                         text("Player 1 :" +allPlayers.player1.score,50,50);
+                        text("Player 2 :" + allPlayers.player2.score, 50, 100);
                  
                  }
                 
@@ -77,7 +77,7 @@ class Game{
                     Player.updatePlayerAtEnd(player.rank);
                     player.update();
                     this.showRank();
-                 gameState = 2;
+                 gameState = 2; 
 
                 }
                  
@@ -120,26 +120,45 @@ class Game{
                               
                           }
                           
-                      }
+                        }
                   }
                 
 
          
          
         
-         
-
+                
     }
     showRank() {
         swal({
-            title: `Incrível!${"\n"}Lugar${"\n"}${player.rank}`,
-            text: "Você alcançou a linha de chegada com sucesso",
+            title: `Incrível!${"\n"}Classificação${"\n"}${player.rank}`,
+            text: "Você alcançou o fim do jogo com sucesso",
             imageUrl:
               "https://raw.githubusercontent.com/vishalgaddam873/p5-multiplayer-car-race-game/master/assets/cup.png",
             imageSize: "100x100",
             confirmButtonText: "Ok"
           });
         }
+            
 
 
-}
+       
+
+        gameOver() {
+         if(gameState === "end") {
+            fill("white");
+            text("parabens voce pegou toda s as frutas!",width/3+100,heigt/3-100,190,100);
+            confirmButtonText: "aperte aqui/n para reiniciar";
+         }
+        }
+            
+
+
+
+
+            end(){
+               console.log("O Jogo Terminou");
+               console.log(player.rank)
+               this.gameOver();
+            }
+        }
