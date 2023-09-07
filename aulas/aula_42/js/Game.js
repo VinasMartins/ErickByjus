@@ -7,6 +7,7 @@ class Game {
     this.leader1 = createElement("h2");
     this.leader2 = createElement("h2");
     this.playerMoving = false;
+
   }
     getState (){
     var gameStateRef = database.ref ("gameState");
@@ -39,7 +40,59 @@ class Game {
     car2.scale=0.07 ;
 
     cars = [car1,car2 ];
+
+    fuels = new Group();
+    powerCoins = new Group();
+    obstacles1 = new Group();
+    obstacles2 = new Group();
+
+    var obstacle1Positions = [
+      {x: width/2-150,y: height-1300,image: obstacleImg1},
+      {x: width/2+250,y: height-1800,image: obstacleImg1},
+      {x: width/2-180,y: height-3300,image: obstacleImg1},
+      {x: width/2-150,y: height-4300,image: obstacleImg1},
+      {x: width/2,y: height-5300,image: obstacleImg1},
+    ]
+
+    var obstacle2Positions = [
+      {x: width/2+250,y: height-800,image: obstacleImg2},
+      {x: width/2-180,y: height-2300,image: obstacleImg2},
+      {x: width/2,y: height-2800,image: obstacleImg2},
+      {x: width/2+180,y: height-3300,image: obstacleImg2},
+      {x: width/2+250,y: height-3800,image: obstacleImg2},
+      {x: width/2+250,y: height-4800,image: obstacleImg2},
+      {x: width/2-180,y: height-5500,image: obstacleImg2},
+    ]
+
+    this.addSprites(fuels,4,fuelImage,0.02);
+    this.addSprites(powerCoins,18,powerCoinImg,0.09);
+    this.addSprites(obstacles1,obstacle1Positions.length,obstacleImg1,0.04,obstacle1Positions);
+    this.addSprites(obstacles2,obstacle2Positions.length,obstacleImg2,0.04,obstacle2Positions);
   }
+
+  addSprites(spriteGroup,numberOfSprites,spriteImage,scale,positions = []){
+    for (let i = 0; i < numberOfSprites; i++) {
+      var x,y;
+
+      if (positions.length > 0) {
+        x = positions[i].x;
+        y = positions[i].y;
+
+        spriteImage = positions[i].image;
+      } else {
+        x = random(width/2+150,width/2-150);
+        y = random(-height*4.5,height-400);
+
+      }
+
+      var sprite = createSprite(x,y);
+      sprite.addImage("sprite",spriteImage);
+      sprite.scale = scale;
+      spriteGroup.add(sprite); 
+      
+    }
+  }
+
    handleElements (){
     form.hide ();
     form.titleImg.position (40,50);
@@ -94,12 +147,18 @@ class Game {
           fill("red");
           ellipse(x, y, 60, 60);
           this.handleFuel(index);
+          this.handlePowerCoins(index);
 
          
    
           //alterar a posição da câmera na direção y
           camera.position.y = cars[index - 1].position.y;
         }
+      }
+
+      if (this.playerMoving) {
+        player.positionY +=5;
+        player.update();
       }
 
       this.handlePlayerControls();
@@ -216,9 +275,28 @@ class Game {
   }
 
   handleFuel(index){
+    cars[index-1].overlap(fuels,function(collector,collected){
+      player.fuel = 185;
+      collected.remove();
+    })
+
     if (player.fuel > 0 && this.playerMoving) {
       player.fuel -=0.3;
     }
+
+    if (player.fuel <= 0) {
+      gameState = 2;
+      this.gameOver();
+    }
+
+  }
+
+  handlePowerCoins(index){
+    cars[index-1].overlap(powerCoins,function(collector,collected){
+      player.score +=21;
+      player.update();
+      collected.remove();
+    })
   }
 
   showRank(){
