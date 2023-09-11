@@ -7,6 +7,7 @@ class Game {
     this.leader1 = createElement("h2");
     this.leader2 = createElement("h2");
     this.playerMoving = false;
+    this.leftKeyActive = false;
 
   }
     getState (){
@@ -148,6 +149,7 @@ class Game {
           ellipse(x, y, 60, 60);
           this.handleFuel(index);
           this.handlePowerCoins(index);
+          this.handleObstaclesCollision(index);
 
          
    
@@ -187,11 +189,13 @@ class Game {
     }
 
     if (keyIsDown(LEFT_ARROW)&&player.positionX > width/3-50 || keyDown("A")&&player.positionX > width/3-50) {
+      this.leftKeyActive = true;
       player.positionX -=5;
       player.update();
     }
 
     if (keyIsDown(RIGHT_ARROW)&&player.positionX < width/2+300 || keyDown("D")&&player.positionX < width/2+300) {
+      this.leftKeyActive = false;
       player.positionX +=5;
       player.update();
     }
@@ -299,6 +303,22 @@ class Game {
     })
   }
 
+  handleObstaclesCollision(index){
+    if (cars[index-1].collide(obstacles1)||cars[index-1].collide(obstacles2)) {
+      if (this.leftKeyActive) {
+        player.positionX +=100;
+      } else {
+        player.positionX -=100;
+      }
+
+      if (player.life > 0) {
+        player.life -=185/4;
+      }
+
+      player.update();
+    }
+  }
+
   showRank(){
     swal({
       title:`Incrivel!${"\n"}Rank${"\n"}${player.rank}`,
@@ -306,6 +326,16 @@ class Game {
       imageUrl:"https://raw.githubusercontent.com/vishalgaddam873/p5-multiplayer-car-race-game/master/assets/cup.png",
       imageSize:"100x100",
       confirmButtonText:"ok"
+    })
+  }
+
+  gameOver(){
+    swal({
+      title:`Fim de jogo!`,
+      text:"Ops voce perdeu a corrida!",
+      imageUrl:"https://cdn.shopify.com/s/files/1/1061/1924/products/Thumbs_Down_Sign_Emoji_Icon_ios10_grande.png",
+      imageSize:"100x100",
+      confirmButtonText:"Obrigado por jogar!"
     })
   }
 }
